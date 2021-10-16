@@ -19,9 +19,6 @@ public class makeCerealCmd implements Command {
 
   private IntakeSys mIntakeSys;
 
-  
-
-
   public makeCerealCmd(LogitechJoystick stick) {
 
     mStick = stick; 

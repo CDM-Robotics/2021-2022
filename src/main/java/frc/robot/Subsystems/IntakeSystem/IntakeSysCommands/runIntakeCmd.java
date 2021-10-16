@@ -40,8 +40,9 @@ public class runIntakeCmd implements Command {
   public void execute() {
     
     boolean isPressed = mStick.getRawButton(IntakeSysConstants.INTAKE_RUN_BUTTON);
-
-    mIntakeSys.takeInBalls(isPressed);
+    boolean out_isPressed = mStick.getRawButton(IntakeSysConstants.INTAKE_EXPEL_BUTTON);
+    
+    mIntakeSys.runIntake(isPressed, out_isPressed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -44,7 +44,7 @@ public class ArcadeDriveCmd implements Command {
       double mag = mStick.getInvertedY();
       double yaw = mStick.getX();
       double maxSpeed = 1 - mStick.getThrottle(); 
-      
+     
 
       // mag = -mag;// y comes out from stick as negative when going forward, so convert
       // reduce sensitivity on turn

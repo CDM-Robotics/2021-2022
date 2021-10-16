@@ -59,16 +59,21 @@ public class IntakeSys implements Subsystem {
     }
 
 
-    public void takeInBalls(boolean isPressed) {
+    public void runIntake(boolean in, boolean out) {
 
-        if (isPressed) {
+        if (in) {
 
             mIntakeMaster.set(ControlMode.PercentOutput, IntakeSysConstants.INTAKE_MASTER_SPEED_PERCENT);
+
+        } else if (out) {
+            mIntakeMaster.set(ControlMode.PercentOutput,-1 * IntakeSysConstants.INTAKE_MASTER_SPEED_PERCENT);
         } else {
 
             mIntakeMaster.set(ControlMode.PercentOutput, 0);
         }
     }
+
+    
 
     public void makeCereal() {
 

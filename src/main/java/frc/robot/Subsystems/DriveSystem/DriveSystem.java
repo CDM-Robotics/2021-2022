@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 public class DriveSystem implements Subsystem  {
 
 
+
     // masters are the leads here. The Left or Right Master directs the Left or Right follower respectivly. 
     private WPI_TalonFX mLeft_Master;
     private WPI_TalonFX mRight_Master;
@@ -57,14 +58,13 @@ public class DriveSystem implements Subsystem  {
      */
     private DriveSystem() {
 
+
         mLeft_Master = new WPI_TalonFX(DriveSysConstants.LEFT_TALON_MASTER);
         mLeft_Slave0 = new WPI_TalonFX(DriveSysConstants.LEFT_TALON_SLAVE0);
         mRight_Master = new WPI_TalonFX(DriveSysConstants.RIGHT_TALON_MASTER);
         mRight_Slave0 = new WPI_TalonFX(DriveSysConstants.RIGHT_TALON_SLAVE0);
 
-
         configMotors();
-
     }
 
     /**
@@ -89,7 +89,7 @@ public class DriveSystem implements Subsystem  {
         mRight_Slave0.setSensorPhase(DriveSysConstants.RIGHT_TALON_SLAVE0_SENSOR_PHASE);
 
 
-        // adds the configured motor to mRoboDrive 
+    
         
         
     }
@@ -109,17 +109,27 @@ public class DriveSystem implements Subsystem  {
         magIsPositive = (mag > 0);
         yawIsPositive = (yaw > 0); 
 
-
         yaw = 1 - Math.abs(yaw);
-
         
-        if (yaw > 0.7) {
+        if (yaw > 0.7) {// to drive straight forward or backward
 
             leftMag = mag * speed; 
             rightMag = mag * speed; 
 
-        }else{
+        }else if ((yaw < 0.15) && (Math.abs(mag)< 0.25)) {// to turn in place 
 
+            if (yawIsPositive) {
+
+                leftMag = speed / 1.3;
+                rightMag = speed * -1 / 1.3;
+            } else {
+
+                leftMag = speed * -1 / 1.3;
+                rightMag = speed / 1.3;
+            }
+
+        } else { // to turn and move. 
+        
             mag = DriveSysConstants.DRIVE_MIN_PERCENT_OUT + ((mag * mag) * (1 - DriveSysConstants.DRIVE_MIN_PERCENT_OUT));
             
             if (magIsPositive) {
@@ -147,18 +157,6 @@ public class DriveSystem implements Subsystem  {
                 }
             }     
         }  
-
-        if ((yaw < 0.15) && (Math.abs(mag)< 0.25)) {
-
-            if (yawIsPositive) {
-                leftMag = speed / 1.3;
-                rightMag = speed * -1 / 1.3;
-            } else {
-                leftMag = speed * -1 / 1.3;
-                rightMag = speed / 1.3;
-            }
-        }
-
 
         mLeft_Master.set(ControlMode.PercentOutput, leftMag);
         mRight_Master.set(ControlMode.PercentOutput, rightMag);

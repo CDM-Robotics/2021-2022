@@ -12,6 +12,7 @@ public class IntakeSysConstants {
     public static final boolean INTAKE_MASTER_isInverted = false; 
     public static final double INTAKE_MASTER_SPEED_PERCENT = 1; 
     public static final int INTAKE_RUN_BUTTON = 1;
+    public static final int INTAKE_EXPEL_BUTTON = 3; 
 
     public static final int INTAKE_PISTON_0_PCM_NUM = 0; 
     public static final int INTAKE_PISTON_1_PCM_NUM = 1; 
