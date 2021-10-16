@@ -38,11 +38,8 @@ public class runIntakeCmd implements Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    
-    boolean isPressed = mStick.getRawButton(IntakeSysConstants.INTAKE_RUN_BUTTON);
-    boolean out_isPressed = mStick.getRawButton(IntakeSysConstants.INTAKE_EXPEL_BUTTON);
-    
-    mIntakeSys.runIntake(isPressed, out_isPressed);
+        
+    mIntakeSys.runIntake(mStick.getRawButton(IntakeSysConstants.INTAKE_RUN_BUTTON), mStick.getRawButton(IntakeSysConstants.INTAKE_EXPEL_BUTTON));
   }
 
   // Make this return true when this Command no longer needs to run execute()

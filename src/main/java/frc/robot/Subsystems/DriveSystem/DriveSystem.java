@@ -87,10 +87,6 @@ public class DriveSystem implements Subsystem  {
         mLeft_Slave0.setSensorPhase(DriveSysConstants.LEFT_TALON_SLAVE0_SENSOR_PHASE);
         mRight_Master.setSensorPhase(DriveSysConstants.RIGHT_TALON_MASTER_SENSOR_PHASE);
         mRight_Slave0.setSensorPhase(DriveSysConstants.RIGHT_TALON_SLAVE0_SENSOR_PHASE);
-
-
-    
-        
         
     }
     
@@ -108,15 +104,15 @@ public class DriveSystem implements Subsystem  {
         speed = speed/5;
         magIsPositive = (mag > 0);
         yawIsPositive = (yaw > 0); 
-
+        
         yaw = 1 - Math.abs(yaw);
         
-        if (yaw > 0.7) {// to drive straight forward or backward
+        if (yaw > 0.9) {// to drive straight forward or backward
 
             leftMag = mag * speed; 
             rightMag = mag * speed; 
 
-        }else if ((yaw < 0.15) && (Math.abs(mag)< 0.25)) {// to turn in place 
+        }else if ((yaw < 0.25) && (Math.abs(mag)< 0.25)) {// to turn in place 
 
             if (yawIsPositive) {
 

@@ -14,11 +14,6 @@ public class IntakeSysConstants {
     public static final int INTAKE_RUN_BUTTON = 1;
     public static final int INTAKE_EXPEL_BUTTON = 3; 
 
-    public static final int INTAKE_PISTON_0_PCM_NUM = 0; 
-    public static final int INTAKE_PISTON_1_PCM_NUM = 1; 
-    public static final int INTAKE_EXTEND_BUTTON = 2; 
+}
 
     
-
-    public static final boolean CERIAL_MOTOR_isInverted = false;
-}

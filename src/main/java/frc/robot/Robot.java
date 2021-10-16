@@ -18,8 +18,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Subsystems.DriveSystem.DriveSystem;
 import frc.robot.Subsystems.DriveSystem.driveSysCommands.ArcadeDriveCmd;
 import frc.robot.Subsystems.IntakeSystem.IntakeSys;
-import frc.robot.Subsystems.IntakeSystem.IntakeSysCommands.extendIntakeCmd;
 import frc.robot.Subsystems.IntakeSystem.IntakeSysCommands.runIntakeCmd;
+import frc.robot.Subsystems.PneumaticSys.PneumaticSys;
+import frc.robot.Subsystems.PneumaticSys.PneumaticSysCommands.pneumaticCmd;
 import frc.robot.logging.JLogWrapper;
 import frc.robot.logging.LogWrapper;
 import frc.robot.logging.LogWrapper.FileType;
@@ -35,9 +36,9 @@ public class Robot extends TimedRobot {
 
   private CommandScheduler mScheduler;
 
-  private LogWrapper mLog;
+  //private LogWrapper mLog;
 
-	private JLogWrapper mJLog;
+	//private JLogWrapper mJLog;
 
 
 
@@ -59,6 +60,7 @@ public class Robot extends TimedRobot {
     // creates an instance of the drive system so that its methods can be called within this class. 
     DriveSystem.getInstance();
     IntakeSys.getInstance(); 
+    PneumaticSys.getInstance(); 
 
   }
 
@@ -118,12 +120,12 @@ public class Robot extends TimedRobot {
 		// Schedule commands
     ArcadeDriveCmd arcadeDriveCmd = new ArcadeDriveCmd(ControlBoard.getInstance().mDriveStick);
     runIntakeCmd runIntakeCmd = new runIntakeCmd(ControlBoard.getInstance().mDriveStick);
-    //extendIntakeCmd extendIntakeCmd = new extendIntakeCmd(ControlBoard.getInstance().mDriveStick);
+    pneumaticCmd pneumaticExtendRetractCmd = new pneumaticCmd(ControlBoard.getInstance().mDriveStick);
     
-    //ParallelCommandGroup intakeCommandGroup = new ParallelCommandGroup(runIntakeCmd, extendIntakeCmd); 
+    
     mScheduler.schedule(arcadeDriveCmd);
     mScheduler.schedule(runIntakeCmd);
-    //mScheduler.schedule(extendIntakeCmd);
+    mScheduler.schedule(pneumaticExtendRetractCmd);
     
   }
 
