@@ -8,7 +8,7 @@ package frc.robot.Subsystems.IntakeSystem;
 public class IntakeSysConstants {
 
 
-    public static final int INTAKE_MASTER_MOTOR_NUMBER = 12; 
+    public static final int INTAKE_MASTER_MOTOR_NUMBER = 10; 
     public static final boolean INTAKE_MASTER_isInverted = false; 
     public static final double INTAKE_MASTER_SPEED_PERCENT = 1; 
     public static final int INTAKE_RUN_BUTTON = 1;

@@ -14,7 +14,10 @@ public class ControlBoard {
 
     //Drive stick is the joystick for driving the robot
     public LogitechJoystick mDriveStick; 
-    private static int DRIVE_USB_PORT = 0;
+    private static final int DRIVE_USB_PORT = 0;
+
+    public LogitechJoystick mShootStick; 
+    private static final int SHOOT_USB_PORT = 1; 
 
 
 
@@ -29,6 +32,7 @@ public class ControlBoard {
     private ControlBoard() {
 
         mDriveStick = new LogitechJoystick(DRIVE_USB_PORT);
+        mShootStick = new LogitechJoystick(SHOOT_USB_PORT);
     }
 
 }

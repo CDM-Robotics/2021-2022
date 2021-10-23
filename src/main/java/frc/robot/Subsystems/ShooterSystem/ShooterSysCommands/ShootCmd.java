@@ -4,42 +4,52 @@
 
 package frc.robot.Subsystems.ShooterSystem.ShooterSysCommands;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Subsystems.ShooterSystem.ShooterSys;
+import frc.robot.Subsystems.ShooterSystem.ShooterSysConstants;
+import frc.robot.Utility.LogitechJoystick;
 
-public class ShootCmd extends Command {
+public class ShootCmd implements Command {
 
-  private JoystickButton button;
+  private LogitechJoystick mStick; 
 
   private static ShooterSys mShooterSys; 
 
-  public ShootCmd() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  public ShootCmd(LogitechJoystick stick) {
+
+    mStick = stick; 
+
+    mShooterSys = ShooterSys.getInstance(); 
+   
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {}
+  public Set<Subsystem> getRequirements() {
+    HashSet<Subsystem> requirements = new HashSet<Subsystem>();
+    requirements.add(mShooterSys);
+    return requirements;
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {}
+  public void execute() {
+
+    boolean runShooter = mStick.getRawButton(ShooterSysConstants.SHOOT_BUTTON); 
+    double yaw = mStick.getX();
+
+    mShooterSys.RunShooterSys(runShooter);
+    mShooterSys.aimShooter(yaw/2);
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  public boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {}
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {}
 }

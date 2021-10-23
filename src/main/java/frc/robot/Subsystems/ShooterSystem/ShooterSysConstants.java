@@ -9,16 +9,24 @@ import edu.wpi.first.wpilibj.Joystick;
 /** Add your docs here. */
 public class ShooterSysConstants {
 
-    public static final int LEFT_SHOOTER_MOTOR = 0; 
-    public static final int RIGHT_SHOOTER_MOTOR = 0;
+    public static final int SERIALIZER_MAIN_MASTER = 0;
+    public static final int SERIALIZER_MAIN_SLAVE0 = 0;
+    public static final int SERIALIZER_HORIZONTAL_MASTER = 0; 
 
-    public static final int TURRET_ROTATION_MOTOR = 0;
+    public static final int SHOOTER_RIGHT_MASTER = 12; 
+    public static final int SHOOTER_LEFT_SLAVE0 = 15;
 
-    public static final int SHOOTER_RELOAD_MOTOR = 0;
+    public static final int SHOOTER_ROTATE_MASTER = 11; 
 
-    public static final boolean LEFT_SHOOTER_MOTOR_isInverted = false; 
-    public static final boolean RIGHT_SHOOTER_MOTOR_isInverted = false;
+    public static final boolean SERIALIZER_MAIN_MASTER_isInverted = false; 
+    public static final boolean SERIALIZER_MAIN_SLAVE0_isInverted = false; 
+    public static final boolean SERIALIZER_HORIZONTAL_SLAVE0_isInverted = false; 
 
-    
+    public static final boolean SHOOTER_RIGHT_MASTER_isInverted = false; 
+    public static final boolean SHOOTER_LEFT_SLAVE0_isInverted = true;
+
+    public static final boolean SHOOTER_ROTATE_MASTER_isInverted = false; 
+
+    public static final int  SHOOT_BUTTON = 1; 
 
 }
