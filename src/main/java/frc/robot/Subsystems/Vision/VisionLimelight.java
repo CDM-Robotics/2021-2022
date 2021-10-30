@@ -64,7 +64,12 @@ public class VisionLimelight {
     private int count = 0; 
 
     public void printValues() {
-        
+
+        if (count % 5 == 0) {
+
+            System.out.println("X:" + getXoffset() + " Y:" + getYoffset() +" Distance:" + getDistanceToTarget());
+        }
+
 
 
 

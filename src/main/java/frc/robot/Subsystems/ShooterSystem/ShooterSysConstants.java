@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 /** Add your docs here. */
 public class ShooterSysConstants {
 
-    public static final int SERIALIZER_MAIN_MASTER = 10;
+    public static final int SERIALIZER_MAIN_MASTER = 5;
     public static final int SERIALIZER_MAIN_SLAVE0 = 0;
     public static final int SERIALIZER_HORIZONTAL_MASTER = 11; 
 
@@ -30,6 +30,6 @@ public class ShooterSysConstants {
     public static final int  SHOOT_BUTTON = 1; 
     public static final int  ENABLE_AIM_ASSIST_BUTTON = 2; 
 
-    public static final double MAX_PERCENT_OUT = 0.5; 
+    public static final double MAX_PERCENT_OUT = 0.3; 
 
 }

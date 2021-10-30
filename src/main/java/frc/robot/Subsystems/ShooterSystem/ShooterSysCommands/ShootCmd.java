@@ -37,21 +37,27 @@ public class ShootCmd implements Command {
     return requirements;
   }
 
+
+  boolean aimAssist_isEnabled = false; 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
 
     boolean runShooter = mStick.getRawButton(ShooterSysConstants.SHOOT_BUTTON); 
     double yaw = mStick.getX();
-    boolean aimAssist_isEnabled = false;
+   
 
     
     mShooterSys.RunShooterSys(runShooter);
 
     if (mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON) && (aimAssist_isEnabled == false)) {
-        aimAssist_isEnabled = true;
+
+      aimAssist_isEnabled = true;
+
     }else if (mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON) && (aimAssist_isEnabled == true)) {
-      aimAssist_isEnabled = false; 
+
+      aimAssist_isEnabled = false;
+
     }
 
     mShooterSys.aimShooter(yaw/2, aimAssist_isEnabled); 

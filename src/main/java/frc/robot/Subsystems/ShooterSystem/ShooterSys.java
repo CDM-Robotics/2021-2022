@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Subsystems.Vision.VisionLimelight;
 
@@ -74,6 +75,8 @@ public class ShooterSys implements Subsystem {
         mShooter_Slave0.setInverted(ShooterSysConstants.SHOOTER_LEFT_SLAVE0_isInverted);
 
         mShooterRotate_Master.setInverted(ShooterSysConstants.SHOOTER_ROTATE_MASTER_isInverted);
+        mShooterRotate_Master.setSensorPhase(false); 
+        mShooterRotate_Master.setSelectedSensorPosition(0);
 
     }
 
@@ -99,11 +102,13 @@ public class ShooterSys implements Subsystem {
 
     public void aimShooter(double y, boolean isAimAssist) {
 
+        printVal("Sensor Ticks:",mShooterRotate_Master.getSelectedSensorPosition());
         double t = (y / Math.abs(y));
 
         if (isAimAssist == true) {
 
-            mShooterRotate_Master.set(ControlMode.PercentOutput, aimAssist());
+            printVal("aim bot correction:", aimAssist());
+            //mShooterRotate_Master.set(ControlMode.PercentOutput, aimAssist());
         }else{
 
             mShooterRotate_Master.set(ControlMode.PercentOutput, t * ShooterSysConstants.MAX_PERCENT_OUT);
@@ -127,4 +132,14 @@ public class ShooterSys implements Subsystem {
         return xCorrection; 
     }
 
+    private int count = 0; 
+    public void printVal(String print ,double out) {
+
+        if (count % 25 == 0) {
+
+            System.out.println(print + out);
+        }
+
+
+    }
 }
