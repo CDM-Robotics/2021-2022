@@ -47,8 +47,8 @@ public class ShooterSys implements Subsystem {
 
     public ShooterSys() {
 
-        //mSerializer_Master = new WPI_TalonSRX(ShooterSysConstants.SERIALIZER_MAIN_MASTER); 
-        //mSerializerHorizontal_Slave0 = new WPI_TalonSRX(ShooterSysConstants.SERIALIZER_HORIZONTAL_MASTER);
+        mSerializer_Master = new WPI_TalonSRX(ShooterSysConstants.SERIALIZER_MAIN_MASTER); 
+        mSerializerHorizontal_Slave0 = new WPI_TalonSRX(ShooterSysConstants.SERIALIZER_HORIZONTAL_MASTER);
 
         //mShooter_Master = new CANSparkMax(ShooterSysConstants.SHOOTER_RIGHT_MASTER, MotorType.kBrushless);
         //mShooter_Slave0 = new CANSparkMax(ShooterSysConstants.SHOOTER_LEFT_SLAVE0, MotorType.kBrushless);
@@ -64,11 +64,11 @@ public class ShooterSys implements Subsystem {
 
     private void configMotors() {
 
-        // mSerializerHorizontal_Slave0.follow(mSerializer_Master);
+        mSerializerHorizontal_Slave0.follow(mSerializer_Master);
         mShooter_Slave0.follow(mShooter_Master);
 
-        //mSerializer_Master.setInverted(ShooterSysConstants.SERIALIZER_MAIN_MASTER_isInverted);
-        // mSerializerHorizontal_Slave0.setInverted(ShooterSysConstants.SERIALIZER_HORIZONTAL_SLAVE0_isInverted);
+        mSerializer_Master.setInverted(ShooterSysConstants.SERIALIZER_MAIN_MASTER_isInverted);
+        mSerializerHorizontal_Slave0.setInverted(ShooterSysConstants.SERIALIZER_HORIZONTAL_SLAVE0_isInverted);
 
         mShooter_Master.setInverted(ShooterSysConstants.SHOOTER_RIGHT_MASTER_isInverted);
         mShooter_Slave0.setInverted(ShooterSysConstants.SHOOTER_LEFT_SLAVE0_isInverted);
@@ -83,14 +83,14 @@ public class ShooterSys implements Subsystem {
 
             mShooter_Master.set(ControlMode.PercentOutput, 1);
      
-            //mSerializer_Master.set(ControlMode.PercentOutput, 1);
+            mSerializer_Master.set(ControlMode.PercentOutput, 1);
 
             //mShooter_Master.set(1);
         }else{
 
             mShooter_Master.set(ControlMode.PercentOutput, 0);
 
-            //mSerializer_Master.set(ControlMode.PercentOutput, 0);
+            mSerializer_Master.set(ControlMode.PercentOutput, 0);
 
             //mShooter_Master.set(0);
             
