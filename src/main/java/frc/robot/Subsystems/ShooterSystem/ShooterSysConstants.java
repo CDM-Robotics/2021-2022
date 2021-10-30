@@ -27,9 +27,11 @@ public class ShooterSysConstants {
 
     public static final boolean SHOOTER_ROTATE_MASTER_isInverted = false; 
 
-    public static final int  SHOOT_BUTTON = 1; 
+    public static final int  SERIALIZER_RUN_BUTTON = 1; 
     public static final int  ENABLE_AIM_ASSIST_BUTTON = 2; 
 
-    public static final double MAX_PERCENT_OUT = 0.3; 
+    public static final double MAX_PERCENT_OUT = 0.5; 
+
+    public static final int RUN_SHOOTER_BOTTON = 3; 
 
 }

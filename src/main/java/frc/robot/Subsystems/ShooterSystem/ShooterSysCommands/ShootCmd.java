@@ -43,18 +43,18 @@ public class ShootCmd implements Command {
   @Override
   public void execute() {
 
-    boolean runShooter = mStick.getRawButton(ShooterSysConstants.SHOOT_BUTTON); 
+    boolean runShooter = mStick.getRawButton(ShooterSysConstants.SERIALIZER_RUN_BUTTON); 
     double yaw = mStick.getX();
-   
-
+    boolean toggleAimbot = mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON); 
+    boolean toggleShooterOn = mStick.getRawButtonPressed(ShooterSysConstants.RUN_SHOOTER_BOTTON);
     
-    mShooterSys.RunShooterSys(runShooter);
+    mShooterSys.RunShooterSys(runShooter, toggleShooterOn);
 
-    if (mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON) && (aimAssist_isEnabled == false)) {
+    if (toggleAimbot && (aimAssist_isEnabled == false)) {
 
       aimAssist_isEnabled = true;
 
-    }else if (mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON) && (aimAssist_isEnabled == true)) {
+    }else if (toggleAimbot && (aimAssist_isEnabled == true)) {
 
       aimAssist_isEnabled = false;
 

@@ -75,43 +75,44 @@ public class ShooterSys implements Subsystem {
         mShooter_Slave0.setInverted(ShooterSysConstants.SHOOTER_LEFT_SLAVE0_isInverted);
 
         mShooterRotate_Master.setInverted(ShooterSysConstants.SHOOTER_ROTATE_MASTER_isInverted);
-        mShooterRotate_Master.setSensorPhase(false); 
         mShooterRotate_Master.setSelectedSensorPosition(0);
 
     }
 
-    public void RunShooterSys(boolean runShooter) {
+    private int shooterSpinVal = 0; 
+    public void RunShooterSys(boolean runShooter, boolean shooterIsOn) {
 
         if (runShooter) {
-
-            mShooter_Master.set(ControlMode.PercentOutput, 1);
      
             mSerializer_Master.set(ControlMode.PercentOutput, 1);
-
             //mShooter_Master.set(1);
         }else{
-
-            mShooter_Master.set(ControlMode.PercentOutput, 0);
-
             mSerializer_Master.set(ControlMode.PercentOutput, 0);
 
             //mShooter_Master.set(0);
-            
         }
+
+        if (shooterIsOn) {
+            shooterSpinVal -= 1; 
+            shooterSpinVal = Math.abs(shooterSpinVal); 
+            mShooter_Master.set(shooterSpinVal);
+        }
+
+
     }
 
     public void aimShooter(double y, boolean isAimAssist) {
 
-        printVal("Sensor Ticks:",mShooterRotate_Master.getSelectedSensorPosition());
-        double t = (y / Math.abs(y));
+        printVal("Sensor Ticks:",mShooterRotate_Master.getSensorCollection().getPulseWidthPosition());
+        double t = (y / (Math.abs(y) + 0.001) );
 
         if (isAimAssist == true) {
 
-            printVal("aim bot correction:", aimAssist());
-            //mShooterRotate_Master.set(ControlMode.PercentOutput, aimAssist());
+            //printVal("aim bot correction:", aimAssist());
+            mShooterRotate_Master.set(ControlMode.PercentOutput, aimAssist());
         }else{
 
-            mShooterRotate_Master.set(ControlMode.PercentOutput, t * ShooterSysConstants.MAX_PERCENT_OUT);
+            mShooterRotate_Master.set(ControlMode.PercentOutput, y);
         }
         
     }
