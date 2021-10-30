@@ -23,6 +23,7 @@ import frc.robot.Subsystems.PneumaticSys.PneumaticSys;
 import frc.robot.Subsystems.PneumaticSys.PneumaticSysCommands.pneumaticCmd;
 import frc.robot.Subsystems.ShooterSystem.ShooterSys;
 import frc.robot.Subsystems.ShooterSystem.ShooterSysCommands.ShootCmd;
+import frc.robot.Subsystems.Vision.VisionLimelight;
 import frc.robot.logging.JLogWrapper;
 import frc.robot.logging.LogWrapper;
 import frc.robot.logging.LogWrapper.FileType;
@@ -64,6 +65,8 @@ public class Robot extends TimedRobot {
     IntakeSys.getInstance(); 
     PneumaticSys.getInstance(); 
     ShooterSys.getInstance(); 
+    VisionLimelight.getInstance(); 
+
 
   }
 
@@ -120,11 +123,12 @@ public class Robot extends TimedRobot {
 		// start independent Threads
 		//startThreads();
 
-		// Schedule commands
+		//Schedule commands
     ArcadeDriveCmd arcadeDriveCmd = new ArcadeDriveCmd(ControlBoard.getInstance().mDriveStick);
     runIntakeCmd runIntakeCmd = new runIntakeCmd(ControlBoard.getInstance().mDriveStick);
     pneumaticCmd pneumaticExtendRetractCmd = new pneumaticCmd(ControlBoard.getInstance().mDriveStick);
     ShootCmd shootCmd = new ShootCmd(ControlBoard.getInstance().mShootStick); 
+
     
     
     mScheduler.schedule(arcadeDriveCmd);
@@ -134,11 +138,13 @@ public class Robot extends TimedRobot {
     
   }
 
+  int q;
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
 
     mScheduler.run();
+    
     
     /* try {
 			mScheduler.run();

@@ -21,6 +21,8 @@ public class ShootCmd implements Command {
 
   private static ShooterSys mShooterSys; 
 
+  private int mCounter = 0; 
+
   public ShootCmd(LogitechJoystick stick) {
 
     mStick = stick; 
@@ -41,9 +43,18 @@ public class ShootCmd implements Command {
 
     boolean runShooter = mStick.getRawButton(ShooterSysConstants.SHOOT_BUTTON); 
     double yaw = mStick.getX();
+    boolean aimAssist_isEnabled = false;
 
+    
     mShooterSys.RunShooterSys(runShooter);
-    mShooterSys.aimShooter(yaw/2);
+
+    if (mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON) && (aimAssist_isEnabled == false)) {
+        aimAssist_isEnabled = true;
+    }else if (mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON) && (aimAssist_isEnabled == true)) {
+      aimAssist_isEnabled = false; 
+    }
+
+    mShooterSys.aimShooter(yaw/2, aimAssist_isEnabled); 
   }
 
   // Make this return true when this Command no longer needs to run execute()

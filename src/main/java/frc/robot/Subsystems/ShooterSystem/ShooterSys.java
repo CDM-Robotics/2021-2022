@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Subsystems.Vision.VisionLimelight;
 
 /** The Shooter system is resposible for the 2 shooter motors, the motor that rotates and aims the shooter, and the motors that moves the balls into the shooter */
 public class ShooterSys implements Subsystem {
@@ -96,9 +97,34 @@ public class ShooterSys implements Subsystem {
         }
     }
 
-    public void aimShooter(double y) {
+    public void aimShooter(double y, boolean isAimAssist) {
 
-        mShooterRotate_Master.set(ControlMode.PercentOutput, y);
+        double t = (y / Math.abs(y));
+
+        if (isAimAssist == true) {
+
+            mShooterRotate_Master.set(ControlMode.PercentOutput, aimAssist());
+        }else{
+
+            mShooterRotate_Master.set(ControlMode.PercentOutput, t * ShooterSysConstants.MAX_PERCENT_OUT);
+        }
+        
+    }
+
+    public double aimAssist() {
+
+        double xOffset = VisionLimelight.getInstance().getXoffset(); 
+        double xCorrection = 0; 
+
+        if(xOffset > 1) {
+
+            xCorrection = -0.19 - ((Math.abs(xOffset)/100) * 3); 
+        } else if(xOffset < -1) {
+
+            xCorrection = 0.19 + ((Math.abs(xOffset)/100) * 3); 
+        }
+
+        return xCorrection; 
     }
 
 }
