@@ -46,10 +46,12 @@ public class ShootCmd implements Command {
     boolean runShooter = mStick.getRawButton(ShooterSysConstants.SERIALIZER_RUN_BUTTON); 
     double yaw = mStick.getX();
     boolean toggleAimbot = mStick.getRawButtonPressed(ShooterSysConstants.ENABLE_AIM_ASSIST_BUTTON); 
-    boolean toggleShooterOn = mStick.getRawButtonPressed(ShooterSysConstants.RUN_SHOOTER_BOTTON);
-    
-    mShooterSys.RunShooterSys(runShooter, toggleShooterOn);
+    boolean shoot = mStick.getRawButtonPressed(ShooterSysConstants.RUN_SHOOTER_BOTTON);
+    boolean serializer = mStick.getRawButton(ShooterSysConstants.SERIALIZER_VERTICAL_RUN_BUTTON);
 
+    mShooterSys.runSerializer(serializer);
+    mShooterSys.RunShooterSys(runShooter, shoot);
+    
     if (toggleAimbot && (aimAssist_isEnabled == false)) {
 
       aimAssist_isEnabled = true;
@@ -60,7 +62,7 @@ public class ShootCmd implements Command {
 
     }
 
-    mShooterSys.aimShooter(yaw/2, aimAssist_isEnabled); 
+    mShooterSys.aimShooter(yaw, aimAssist_isEnabled); 
   }
 
   // Make this return true when this Command no longer needs to run execute()

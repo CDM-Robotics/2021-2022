@@ -7,7 +7,7 @@ package frc.robot.Subsystems.Vision;
 /** Constants used for vision with limelight. distancess measured in inches */
 public class VisionLimelightConstants {
 
-    public final static double LIMELIGHT_MOUNTING_ANGLE = 0;
-    public final static double LIMELIGHT_MOUNTING_HEIGHT = 0; 
+    public final static double LIMELIGHT_MOUNTING_ANGLE = 32;
+    public final static double LIMELIGHT_MOUNTING_HEIGHT = 23; 
     public final static double FEILD_TARGET_HEIGHT = 90.75; 
 }

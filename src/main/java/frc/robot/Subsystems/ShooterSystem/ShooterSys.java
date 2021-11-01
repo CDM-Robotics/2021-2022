@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems.ShooterSystem;
 
+import java.util.ResourceBundle.Control;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -16,6 +18,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Subsystems.IntakeSystem.IntakeSys;
 import frc.robot.Subsystems.Vision.VisionLimelight;
 
 /** The Shooter system is resposible for the 2 shooter motors, the motor that rotates and aims the shooter, and the motors that moves the balls into the shooter */
@@ -34,6 +37,8 @@ public class ShooterSys implements Subsystem {
     private WPI_TalonFX mShooter_Slave0; 
 
     private WPI_TalonSRX mShooterRotate_Master; 
+
+    
 
 
     public static ShooterSys getInstance() {
@@ -65,7 +70,6 @@ public class ShooterSys implements Subsystem {
 
     private void configMotors() {
 
-        mSerializerHorizontal_Slave0.follow(mSerializer_Master);
         mShooter_Slave0.follow(mShooter_Master);
 
         mSerializer_Master.setInverted(ShooterSysConstants.SERIALIZER_MAIN_MASTER_isInverted);
@@ -79,42 +83,69 @@ public class ShooterSys implements Subsystem {
 
     }
 
-    private int shooterSpinVal = 0; 
-    public void RunShooterSys(boolean runShooter, boolean shooterIsOn) {
+    private double speed = 0; 
+    private int u = 0; 
+    public void RunShooterSys(boolean runShooter, boolean shoot) {
 
         if (runShooter) {
      
             mSerializer_Master.set(ControlMode.PercentOutput, 1);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 1);
             //mShooter_Master.set(1);
         }else{
             mSerializer_Master.set(ControlMode.PercentOutput, 0);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 0);
 
             //mShooter_Master.set(0);
         }
 
-        if (shooterIsOn) {
-            shooterSpinVal -= 1; 
-            shooterSpinVal = Math.abs(shooterSpinVal); 
-            mShooter_Master.set(shooterSpinVal);
-        }
+        if (shoot) {
 
+            speed -= 0.73; //0.73
+            speed = Math.abs(speed); 
+        }
+        mShooter_Master.set(speed);
 
     }
 
+    public void runSerializer(boolean run) {
+
+        if (run) {
+
+            mSerializer_Master.set(ControlMode.PercentOutput, 1);
+        }else {
+
+            mSerializer_Master.set(ControlMode.PercentOutput, 0);
+        }
+    } 
+
+
     public void aimShooter(double y, boolean isAimAssist) {
 
-        printVal("Sensor Ticks:",mShooterRotate_Master.getSensorCollection().getPulseWidthPosition());
-        double t = (y / (Math.abs(y) + 0.001) );
+        double shooterRotate = 0; 
 
         if (isAimAssist == true) {
 
-            //printVal("aim bot correction:", aimAssist());
-            mShooterRotate_Master.set(ControlMode.PercentOutput, aimAssist());
+            shooterRotate = aimAssist(); 
         }else{
 
-            mShooterRotate_Master.set(ControlMode.PercentOutput, y);
+            shooterRotate = y/2; 
         }
-        
+
+        double currentTicks = IntakeSys.getInstance().getTicks(); 
+
+        VisionLimelight.getInstance().printValues();
+
+        if (Math.abs(currentTicks) > ShooterSysConstants.SHOOTER_TICK_RANGE) {
+            
+            if ((currentTicks > 0) && (shooterRotate > 0)) {
+                shooterRotate = 0; 
+            } else if ((currentTicks < 0) && (shooterRotate < 0)) {
+                shooterRotate = 0; 
+            }
+        }
+
+        mShooterRotate_Master.set(ControlMode.PercentOutput, shooterRotate);
     }
 
     public double aimAssist() {
@@ -122,12 +153,14 @@ public class ShooterSys implements Subsystem {
         double xOffset = VisionLimelight.getInstance().getXoffset(); 
         double xCorrection = 0; 
 
-        if(xOffset > 1) {
+        if(xOffset > 0.5) {
 
-            xCorrection = -0.19 - ((Math.abs(xOffset)/100) * 3); 
-        } else if(xOffset < -1) {
+            xCorrection = 0.07 + Math.abs(xOffset/100); 
+            //xCorrection = +0.19 + ((Math.abs(xOffset)/100) * 3); 
+        } else if(xOffset < -0.5) {
 
-            xCorrection = 0.19 + ((Math.abs(xOffset)/100) * 3); 
+            xCorrection = -0.07 -Math.abs(xOffset/100); 
+            //xCorrection = -0.19 - ((Math.abs(xOffset)/100) * 3); 
         }
 
         return xCorrection; 
@@ -141,6 +174,6 @@ public class ShooterSys implements Subsystem {
             System.out.println(print + out);
         }
 
-
+        count++;
     }
 }

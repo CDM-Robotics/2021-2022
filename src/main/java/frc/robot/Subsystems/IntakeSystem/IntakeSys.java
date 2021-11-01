@@ -37,6 +37,8 @@ public class IntakeSys implements Subsystem {
 
         mIntakeMaster.setInverted(IntakeSysConstants.INTAKE_MASTER_isInverted);
 
+        mIntakeMaster.getSensorCollection().setQuadraturePosition(0, 1); 
+        mIntakeMaster.setSensorPhase(false);
         //mCereal.setInverted(IntakeSysConstants.CERIAL_MOTOR_isInverted); 
     }
 
@@ -53,6 +55,11 @@ public class IntakeSys implements Subsystem {
 
             mIntakeMaster.set(ControlMode.PercentOutput, 0);
         }
+    }
+
+    public double getTicks() {
+
+        return mIntakeMaster.getSensorCollection().getQuadraturePosition(); 
     }
 
     
