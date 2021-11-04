@@ -85,19 +85,23 @@ public class ShooterSys implements Subsystem {
 
     private double speed = 0; 
     private int u = 0; 
-    public void RunShooterSys(boolean runShooter, boolean shoot) {
+    public void RunShooterSys(boolean runShooter, boolean shoot, boolean runSerializer) {
 
         if (runShooter) {
      
             mSerializer_Master.set(ControlMode.PercentOutput, 1);
             mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 1);
             //mShooter_Master.set(1);
+        }else if (runSerializer) {
+
+            mSerializer_Master.set(ControlMode.PercentOutput, 1);
+            mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 0);
         }else{
             mSerializer_Master.set(ControlMode.PercentOutput, 0);
             mSerializerHorizontal_Slave0.set(ControlMode.PercentOutput, 0);
 
             //mShooter_Master.set(0);
-        }
+        } 
 
         if (shoot) {
 
@@ -107,18 +111,6 @@ public class ShooterSys implements Subsystem {
         mShooter_Master.set(speed);
 
     }
-
-    public void runSerializer(boolean run) {
-
-        if (run) {
-
-            mSerializer_Master.set(ControlMode.PercentOutput, 1);
-        }else {
-
-            mSerializer_Master.set(ControlMode.PercentOutput, 0);
-        }
-    } 
-
 
     public void aimShooter(double y, boolean isAimAssist) {
 
@@ -134,7 +126,7 @@ public class ShooterSys implements Subsystem {
 
         double currentTicks = IntakeSys.getInstance().getTicks(); 
 
-        VisionLimelight.getInstance().printValues();
+        //VisionLimelight.getInstance().printValues();
 
         if (Math.abs(currentTicks) > ShooterSysConstants.SHOOTER_TICK_RANGE) {
             

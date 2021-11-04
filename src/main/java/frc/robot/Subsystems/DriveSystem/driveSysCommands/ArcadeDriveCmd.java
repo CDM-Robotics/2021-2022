@@ -35,7 +35,7 @@ public class ArcadeDriveCmd implements Command {
   }
       
   
-
+   int count = 0; 
   /**
    * Execute is called by the scheduler until the command returns finished or the
    * OI stops requesting - for example if the whileHeld() button command is used
@@ -44,6 +44,11 @@ public class ArcadeDriveCmd implements Command {
       double mag = mStick.getInvertedY();
       double yaw = mStick.getX();
       double maxSpeed = 1 - mStick.getThrottle(); 
+
+      if (count % 50 == 0) {
+
+        System.out.println(maxSpeed);
+      }
      
 
       // mag = -mag;// y comes out from stick as negative when going forward, so convert

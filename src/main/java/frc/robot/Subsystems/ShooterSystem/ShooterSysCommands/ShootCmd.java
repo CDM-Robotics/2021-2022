@@ -49,8 +49,7 @@ public class ShootCmd implements Command {
     boolean shoot = mStick.getRawButtonPressed(ShooterSysConstants.RUN_SHOOTER_BOTTON);
     boolean serializer = mStick.getRawButton(ShooterSysConstants.SERIALIZER_VERTICAL_RUN_BUTTON);
 
-    mShooterSys.runSerializer(serializer);
-    mShooterSys.RunShooterSys(runShooter, shoot);
+    mShooterSys.RunShooterSys(runShooter, shoot, serializer);
     
     if (toggleAimbot && (aimAssist_isEnabled == false)) {
 

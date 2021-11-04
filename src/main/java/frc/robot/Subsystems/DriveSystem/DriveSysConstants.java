@@ -26,5 +26,6 @@ public class DriveSysConstants {
     public static final boolean LEFT_TALON_MASTER_isInverted = true;
     public static final boolean RIGHT_TALON_MASTER_isInverted = false;
 
-    public static final double DRIVE_MIN_PERCENT_OUT = 0.2; 
+    public static final double DRIVE_MIN_PERCENT_OUT = 0.3; 
+    public static final double DRIVE_MAX_PERCENT_OUT = 0.9;
 }
