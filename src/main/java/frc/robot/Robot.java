@@ -102,12 +102,17 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
  
+    mScheduler.cancelAll();
+    auto auto = new auto(); 
+    mScheduler.schedule(auto);
 
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+
+    mScheduler.run();
     
   }
 
@@ -124,7 +129,7 @@ public class Robot extends TimedRobot {
 		//startThreads();
 
 		//Schedule commands
-    ArcadeDriveCmd arcadeDriveCmd = new ArcadeDriveCmd(ControlBoard.getInstance().mDriveStick);
+    ArcadeDriveCmd arcadeDriveCmd = new ArcadeDriveCmd(ControlBoard.getInstance().mDriveStick, ControlBoard.getInstance().mShootStick);
     runIntakeCmd runIntakeCmd = new runIntakeCmd(ControlBoard.getInstance().mDriveStick);
     pneumaticCmd pneumaticExtendRetractCmd = new pneumaticCmd(ControlBoard.getInstance().mDriveStick);
     ShootCmd shootCmd = new ShootCmd(ControlBoard.getInstance().mShootStick); 

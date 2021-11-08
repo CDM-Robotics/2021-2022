@@ -15,15 +15,16 @@ import frc.robot.Utility.LogitechJoystick;
 public class ArcadeDriveCmd implements Command {
 
   private LogitechJoystick mStick; 
-  
+  private LogitechJoystick mBeefStick; 
   private DriveSystem mDriveSystem;
 
   /**
    * Specify the the command requires the DriveSys subsystem
    */
-  public ArcadeDriveCmd(LogitechJoystick stick) {
+  public ArcadeDriveCmd(LogitechJoystick stick, LogitechJoystick beefstick) {
       // requires(DriveSys.getInstance());
       mStick = stick;
+      mBeefStick = beefstick; 
       mDriveSystem = DriveSystem.getInstance();
   }
 
@@ -43,12 +44,9 @@ public class ArcadeDriveCmd implements Command {
   public void execute() {
       double mag = mStick.getInvertedY();
       double yaw = mStick.getX();
-      double maxSpeed = 1 - mStick.getThrottle(); 
-
-      if (count % 50 == 0) {
-
-        System.out.println(maxSpeed);
-      }
+      double maxSpeed = 1 - mStick.getThrottle();
+       
+      boolean beef = mBeefStick.getRawButton(5);
      
 
       // mag = -mag;// y comes out from stick as negative when going forward, so convert
@@ -56,7 +54,7 @@ public class ArcadeDriveCmd implements Command {
       // mag = mag * 0.55;
 
       //mLog.periodicDebug(20, "Y", mag, "X", yaw);
-      mDriveSystem.arcadeDrive(mag, yaw, maxSpeed);
+      mDriveSystem.arcadeDrive(mag, yaw, maxSpeed, beef);
 
       
   }

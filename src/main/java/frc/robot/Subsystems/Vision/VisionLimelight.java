@@ -19,6 +19,7 @@ public class VisionLimelight {
     /**shows the Y offset from center */
     private NetworkTableEntry ty = table.getEntry("ty");
     private NetworkTableEntry ta = table.getEntry("ta");
+    private NetworkTableEntry tv = table.getEntry("tv");
 
     //read values periodically
     
@@ -51,6 +52,11 @@ public class VisionLimelight {
         return ty.getDouble(0.0);
     }
 
+    public double isInFrame() {
+
+        return tv.getDouble(0.0); 
+    }
+
     public double getDistanceToTarget() {
 
         double distance = 0; 
@@ -74,4 +80,6 @@ public class VisionLimelight {
 
 
     }
+
+  
 }

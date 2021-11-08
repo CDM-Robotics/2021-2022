@@ -97,11 +97,17 @@ public class DriveSystem implements Subsystem  {
     boolean magIsPositive;
     boolean yawIsPositive;
 
-    public void arcadeDrive(double mag, double yaw, double speed) {
+    public void arcadeDrive(double mag, double yaw, double speed, boolean addBeef) {
         
         //mLog.periodicPrint("mag: " + mag + "  yaw: " + yaw + "  maxPercentOut: " + speed, 25);
+        double beef = 0; 
+        
 
-        speed = ((0.7+(speed * 0.3)) ) / 4;
+        if (addBeef == true) {
+
+            beef = 0.25; 
+        }
+        speed = (((0.7+(speed * 0.3)) ) / 3.5) + beef;
         magIsPositive = (mag > 0);
         yawIsPositive = (yaw > 0); 
         
@@ -112,18 +118,18 @@ public class DriveSystem implements Subsystem  {
             leftMag = mag * speed; 
             rightMag = mag * speed; 
 
-        }else if ((yaw < 0.50) && (Math.abs(mag)< 0.30)) {// to turn in place 
+        }else if ((yaw < 0.50) && (Math.abs(mag)< 0.35)) {// to turn in place 
 
             yaw = 1 - yaw; 
 
             if (yawIsPositive) {
 
-                leftMag = yaw * speed / 1.5;
-                rightMag = yaw * speed * -1 / 1.5;
+                leftMag = yaw * speed / 1.4;
+                rightMag = yaw * speed * -1 / 1.4;
             } else {
 
-                leftMag = yaw * speed * -1 / 1.5;
-                rightMag = yaw * speed / 1.5;
+                leftMag = yaw * speed * -1 / 1.4;
+                rightMag = yaw * speed / 1.4;
             }
 
         } else { // to turn and move. 

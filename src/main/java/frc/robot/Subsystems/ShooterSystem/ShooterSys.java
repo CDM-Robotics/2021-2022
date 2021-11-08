@@ -83,8 +83,12 @@ public class ShooterSys implements Subsystem {
 
     }
 
-    private double speed = 0; 
+    private double speed = 0.0; 
     private int u = 0; 
+
+    public double getSpeed() {
+        return speed; 
+    }
     public void RunShooterSys(boolean runShooter, boolean shoot, boolean runSerializer) {
 
         if (runShooter) {
@@ -102,7 +106,10 @@ public class ShooterSys implements Subsystem {
 
             //mShooter_Master.set(0);
         } 
-
+        
+            printVal("shooter speed:", speed);
+        
+        
         if (shoot) {
 
             speed -= 0.73; //0.73
@@ -126,7 +133,6 @@ public class ShooterSys implements Subsystem {
 
         double currentTicks = IntakeSys.getInstance().getTicks(); 
 
-        //VisionLimelight.getInstance().printValues();
 
         if (Math.abs(currentTicks) > ShooterSysConstants.SHOOTER_TICK_RANGE) {
             
@@ -145,6 +151,8 @@ public class ShooterSys implements Subsystem {
         double xOffset = VisionLimelight.getInstance().getXoffset(); 
         double xCorrection = 0; 
 
+        
+
         if(xOffset > 0.5) {
 
             xCorrection = 0.07 + Math.abs(xOffset/100); 
@@ -161,7 +169,7 @@ public class ShooterSys implements Subsystem {
     private int count = 0; 
     public void printVal(String print ,double out) {
 
-        if (count % 25 == 0) {
+        if (count % 10 == 0) {
 
             System.out.println(print + out);
         }
